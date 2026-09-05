@@ -7,9 +7,10 @@
 
     <div class="hero__content">
       <!-- Eyebrow -->
-      <p class="hero__eyebrow label reveal">
-        Ayoub Samaki &mdash; Forward-Deployed AI Engineer &amp; Advisor
-      </p>
+      <div class="hero__eyebrow reveal">
+        <p class="hero__name">Ayoub Samaki</p>
+        <p class="hero__role label">Forward-Deployed AI Engineer &amp; Advisor</p>
+      </div>
 
       <!-- Headline -->
       <h1 class="hero__headline display reveal reveal-delay-1">
@@ -53,7 +54,7 @@
         </div>
         <div class="panel__row">
           <dt class="panel__desc">Years in AI<br />and data science</dt>
-          <dd class="panel__value mono">9+</dd>
+          <dd class="panel__value mono">10+</dd>
         </div>
       </dl>
       <p class="panel__foot mono">revenue counted against live client baselines</p>
@@ -98,6 +99,19 @@
 
   .hero__eyebrow {
     margin-bottom: var(--space-6);
+  }
+
+  .hero__name {
+    font-family: var(--font-display);
+    font-stretch: var(--display-stretch);
+    font-size: var(--text-xl);
+    font-weight: 680;
+    letter-spacing: -0.01em;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  .hero__role {
     color: var(--color-text-muted);
   }
 

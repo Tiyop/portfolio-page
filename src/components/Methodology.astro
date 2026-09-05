@@ -41,7 +41,7 @@ const steps = [
     <ol class="steps" aria-label="Methodology steps">
       {steps.map((step, i) => (
         <li class="step">
-          <div class="step__rule" aria-hidden="true"></div>
+          <div class="step__rule" style={`--fill: ${((i + 1) / steps.length) * 100}%`} aria-hidden="true"></div>
           <span class="step__number mono">{step.n}</span>
           <h3 class="step__title display">{step.title}</h3>
           <p class="step__body">{step.body}</p>
@@ -107,7 +107,7 @@ const steps = [
     left: 0;
     top: 0;
     height: 2px;
-    width: 32px;
+    width: var(--fill, 20%);
     background: var(--color-accent);
   }
 

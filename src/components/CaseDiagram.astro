@@ -1,0 +1,409 @@
+---
+// Numbered schematic plates, one per case study. Pure inline SVG — no assets.
+// Two visual languages: "system" (architecture wiring, gear icon) and "field"
+// (what changed in the business, diamond icon).
+interface Props {
+  diagram: string;
+  index: number;
+}
+const { diagram, index } = Astro.props;
+
+const meta: Record<string, { mode: 'system' | 'field'; caption: string }> = {
+  'message-generation': {
+    mode: 'field',
+    caption: 'Every step widened the rollout only after its gate cleared — offline evals first, then eval scores joined by user feedback and live metrics. The headline number is measured at global scale.',
+  },
+  'client-knowledge-agent': {
+    mode: 'system',
+    caption: 'The agent runs its loop — reason, call a tool, check — inside one harness. Chat is the only way in, memory carries client context across sessions, and every fact is fetched on demand through MCP servers.',
+  },
+  'novelties-recommendation': {
+    mode: 'system',
+    caption: 'Two towers meet in one embedding space: clients encoded from years of history, novelties from attributes alone — so a product can be ranked before its first sale.',
+  },
+  'stock-optimization': {
+    mode: 'field',
+    caption: 'The optimizer sizes each store to facing plus safety stock; everything above that level is excess it releases to stores that will actually sell it.',
+  },
+  'job-search-engine': {
+    mode: 'field',
+    caption: 'Geo queries were 60% of search volume — the segment the test had to win.',
+  },
+};
+
+const { mode, caption } = meta[diagram];
+const figNumber = String(index + 1).padStart(2, '0');
+const modeLabel = mode === 'system' ? 'System view' : 'Field view';
+---
+
+<figure class="diagram" data-mode={mode}>
+  <figcaption class="diagram__head">
+    <span class="diagram__fig mono">Fig. {figNumber}</span>
+    <span class="diagram__mode mono">
+      {mode === 'system' ? (
+        <svg class="diagram__mode-icon" viewBox="0 0 10 10" aria-hidden="true">
+          <circle cx="5" cy="5" r="3.3" fill="none" stroke="currentColor" stroke-width="1.9" stroke-dasharray="1.7 1.55" />
+          <circle cx="5" cy="5" r="1.1" fill="currentColor" />
+        </svg>
+      ) : (
+        <svg class="diagram__mode-icon" viewBox="0 0 10 10" aria-hidden="true">
+          <polygon points="5,0.8 9.2,5 5,9.2 0.8,5" fill="currentColor" />
+        </svg>
+      )}
+      {modeLabel}
+    </span>
+  </figcaption>
+
+  {diagram === 'message-generation' && (
+    <svg viewBox="0 0 360 196" fill="none" aria-hidden="true">
+      <rect x="316" y="4" width="36" height="22" rx="2" class="box--chip" />
+      <text x="334" y="18" class="lbl lbl--accent">3×</text>
+
+      <rect x="8" y="118" width="68" height="16" class="box" />
+      <rect x="100" y="90" width="68" height="44" class="box" />
+      <rect x="192" y="60" width="68" height="74" class="box" />
+      <rect x="284" y="30" width="68" height="104" class="box box--accent" />
+
+      <line x1="76" y1="118" x2="100" y2="90" class="line" />
+      <line x1="168" y1="90" x2="192" y2="60" class="line" />
+      <line x1="260" y1="60" x2="284" y2="30" class="line" />
+
+      <polygon points="92,93 100,101 92,109 84,101" class="gate--eval" />
+      <polygon points="184,63 192,71 184,79 176,71" class="gate--field" />
+      <polygon points="276,33 284,41 276,49 268,41" class="gate--field" />
+
+      <line x1="8" y1="134" x2="352" y2="134" class="line" />
+
+      <text x="42" y="148" class="lbl">prototype</text>
+      <text x="134" y="148" class="lbl">pilot stores</text>
+      <text x="226" y="148" class="lbl">region</text>
+      <text x="318" y="148" class="lbl lbl--accent">global</text>
+
+      <line x1="8" y1="158" x2="352" y2="158" class="line line--faint" />
+      <polygon points="14,166 20,172 14,178 8,172" class="gate--eval" />
+      <text x="28" y="176" class="lbl-l lbl--muted">gate 1 · offline eval score</text>
+      <polygon points="14,182 20,188 14,194 8,188" class="gate--field" />
+      <text x="28" y="192" class="lbl-l lbl--muted">gates 2–3 · eval + user feedback + live metrics</text>
+    </svg>
+  )}
+
+  {diagram === 'client-knowledge-agent' && (
+    <svg viewBox="0 0 360 152" fill="none" aria-hidden="true">
+      <defs>
+        <marker id="ck-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0.5 0.5 L7.5 4 L0.5 7.5 Z" class="arrowhead" />
+        </marker>
+      </defs>
+      <rect x="8" y="48" width="60" height="40" rx="2" class="box" />
+      <text x="38" y="65" class="lbl">advisor</text>
+      <text x="38" y="79" class="sub">chat</text>
+
+      <line x1="68" y1="58" x2="88" y2="58" class="line" marker-end="url(#ck-arrow)" />
+      <line x1="92" y1="78" x2="72" y2="78" class="line" marker-end="url(#ck-arrow)" />
+
+      <rect x="80" y="12" width="156" height="132" rx="4" class="box--frame" />
+      <text x="90" y="28" class="lbl-l lbl--muted">agent harness</text>
+
+      <rect x="92" y="38" width="132" height="44" rx="2" class="box box--accent" />
+      <text x="158" y="57" class="lbl lbl--accent">agent</text>
+      <text x="158" y="71" class="sub">reason · act · observe</text>
+
+      <line x1="146" y1="82" x2="146" y2="92" class="line" marker-end="url(#ck-arrow)" />
+      <line x1="170" y1="94" x2="170" y2="86" class="line" marker-end="url(#ck-arrow)" />
+      <rect x="92" y="96" width="132" height="32" rx="2" class="box" />
+      <text x="158" y="110" class="lbl">memory</text>
+      <text x="158" y="122" class="sub">across sessions</text>
+
+      <rect x="248" y="14" width="104" height="120" rx="3" class="box--dashed" />
+      <text x="256" y="30" class="lbl-l lbl--muted">mcp servers</text>
+
+      <line x1="224" y1="50" x2="252" y2="50" class="line" marker-end="url(#ck-arrow)" />
+      <path d="M224 62 H244 V80 H252" class="line" marker-end="url(#ck-arrow)" />
+      <path d="M224 74 H238 V110 H252" class="line" marker-end="url(#ck-arrow)" />
+
+      <rect x="256" y="38" width="88" height="24" rx="2" class="box" />
+      <text x="300" y="53" class="lbl">products</text>
+      <rect x="256" y="68" width="88" height="24" rx="2" class="box" />
+      <text x="300" y="83" class="lbl">crm</text>
+      <rect x="256" y="98" width="88" height="24" rx="2" class="box" />
+      <text x="300" y="113" class="lbl">interactions</text>
+    </svg>
+  )}
+
+  {diagram === 'novelties-recommendation' && (
+    <svg viewBox="0 0 360 200" fill="none" aria-hidden="true">
+      <defs>
+        <marker id="nv-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0.5 0.5 L7.5 4 L0.5 7.5 Z" class="arrowhead" />
+        </marker>
+      </defs>
+      <text x="94" y="16" class="sub">years of purchase history</text>
+      <text x="266" y="16" class="sub">attributes only · zero sales</text>
+      <line x1="94" y1="22" x2="94" y2="32" class="line" marker-end="url(#nv-arrow)" />
+      <line x1="266" y1="22" x2="266" y2="32" class="line" marker-end="url(#nv-arrow)" />
+
+      <rect x="34" y="38" width="120" height="56" rx="2" class="box" />
+      <line x1="34" y1="58" x2="154" y2="58" class="line line--faint" />
+      <line x1="34" y1="76" x2="154" y2="76" class="line line--faint" />
+      <text x="94" y="52" class="lbl">client tower</text>
+
+      <rect x="206" y="38" width="120" height="56" rx="2" class="box" />
+      <line x1="206" y1="58" x2="326" y2="58" class="line line--faint" />
+      <line x1="206" y1="76" x2="326" y2="76" class="line line--faint" />
+      <text x="266" y="52" class="lbl">product tower</text>
+
+      <line x1="94" y1="94" x2="158" y2="120" class="line" marker-end="url(#nv-arrow)" />
+      <line x1="266" y1="94" x2="202" y2="120" class="line" marker-end="url(#nv-arrow)" />
+
+      <rect x="118" y="124" width="124" height="32" rx="2" class="box box--accent" />
+      <text x="180" y="138" class="lbl lbl--accent">similarity match</text>
+      <text x="180" y="150" class="sub">shared embedding space</text>
+
+      <line x1="180" y1="156" x2="180" y2="168" class="line" marker-end="url(#nv-arrow)" />
+      <rect x="104" y="172" width="152" height="22" rx="2" class="box--chip" />
+      <text x="180" y="186" class="lbl lbl--accent">recommended from day 0</text>
+    </svg>
+  )}
+
+  {diagram === 'stock-optimization' && (
+    <svg viewBox="0 0 360 176" fill="none" aria-hidden="true">
+      <defs>
+        <marker id="st-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0.5 0.5 L7.5 4 L0.5 7.5 Z" class="arrowhead" />
+        </marker>
+      </defs>
+      <rect x="72" y="22" width="96" height="46" class="box--dashed" />
+      <text x="120" y="48" class="lbl lbl--muted">excess</text>
+      <rect x="72" y="68" width="96" height="38" class="box box--accent" />
+      <text x="120" y="90" class="lbl lbl--accent">safety stock</text>
+      <rect x="72" y="106" width="96" height="40" class="box" />
+      <text x="120" y="129" class="lbl">facing</text>
+
+      <line x1="16" y1="68" x2="68" y2="68" class="line line--floor" />
+      <text x="8" y="50" class="sub-l">optimized</text>
+      <text x="8" y="61" class="sub-l">level</text>
+
+      <line x1="168" y1="44" x2="196" y2="44" class="line" marker-end="url(#st-arrow)" />
+      <rect x="200" y="32" width="132" height="24" rx="2" class="box--chip" />
+      <text x="266" y="47" class="lbl lbl--accent">moved where it sells</text>
+
+      <text x="180" y="90" class="sub-l">covers demand swings</text>
+      <text x="180" y="129" class="sub-l">keeps shelves full</text>
+
+      <line x1="8" y1="156" x2="352" y2="156" class="line line--faint" />
+      <text x="8" y="170" class="sub-l">one store, one product — the model sizes every store this way</text>
+    </svg>
+  )}
+
+  {diagram === 'job-search-engine' && (
+    <svg viewBox="0 0 360 144" fill="none" aria-hidden="true">
+      <defs>
+        <marker id="js-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0.5 0.5 L7.5 4 L0.5 7.5 Z" class="arrowhead" />
+        </marker>
+      </defs>
+      <rect x="8" y="52" width="92" height="40" rx="2" class="box" />
+      <text x="54" y="69" class="lbl">live traffic</text>
+      <text x="54" y="83" class="sub">50 / 50 split</text>
+
+      <path d="M100 64 H118 V28 H136" class="line" marker-end="url(#js-arrow)" />
+      <path d="M100 80 H118 V112 H136" class="line" marker-end="url(#js-arrow)" />
+
+      <rect x="140" y="14" width="112" height="28" rx="2" class="box box--dashed" />
+      <text x="196" y="31" class="lbl">legacy ranking</text>
+      <rect x="140" y="98" width="112" height="28" rx="2" class="box box--accent" />
+      <text x="196" y="115" class="lbl lbl--accent">relevancy model</text>
+
+      <line x1="252" y1="28" x2="270" y2="28" class="line" marker-end="url(#js-arrow)" />
+      <line x1="252" y1="112" x2="270" y2="112" class="line" marker-end="url(#js-arrow)" />
+
+      <text x="278" y="31" class="lbl-l lbl--muted">baseline</text>
+      <rect x="274" y="98" width="78" height="28" rx="2" class="box box--chip" />
+      <text x="313" y="110" class="lbl lbl--accent">+20%</text>
+      <text x="313" y="121" class="sub lbl--accent">consultations</text>
+    </svg>
+  )}
+
+  <p class="diagram__caption">{caption}</p>
+</figure>
+
+<style>
+  .diagram {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    overflow: hidden;
+  }
+
+  /* ─── Plate header ───────────────────────────────────────────────────────── */
+  .diagram__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-2) var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .diagram__fig {
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .diagram__mode {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 1px var(--space-3);
+    border-radius: var(--radius-sm);
+  }
+
+  .diagram__mode-icon {
+    width: 9px;
+    height: 9px;
+    flex-shrink: 0;
+  }
+
+  .diagram[data-mode='system'] .diagram__mode {
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent-border);
+  }
+
+  .diagram[data-mode='field'] .diagram__mode {
+    color: var(--color-accent);
+    background: var(--color-accent-dim);
+  }
+
+  /* ─── Plate ──────────────────────────────────────────────────────────────── */
+  .diagram svg:not(.diagram__mode-icon) {
+    width: 100%;
+    height: auto;
+    padding: var(--space-4) var(--space-4) var(--space-3);
+  }
+
+  .diagram__caption {
+    font-size: var(--text-xs);
+    line-height: var(--leading-normal);
+    color: var(--color-text-muted);
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* ─── SVG vocabulary ─────────────────────────────────────────────────────── */
+  .diagram .box {
+    stroke: var(--color-border-strong);
+    fill: var(--color-surface);
+  }
+
+  .diagram .box--accent {
+    stroke: var(--color-accent);
+    fill: var(--color-accent-subtle);
+  }
+
+  .diagram .box--chip {
+    stroke: transparent;
+    fill: var(--color-accent-dim);
+  }
+
+  .diagram .box--guard {
+    stroke: var(--color-accent);
+    fill: var(--color-accent);
+    fill-opacity: 0.25;
+  }
+
+  .diagram .box--frame {
+    stroke: var(--color-border-strong);
+    fill: transparent;
+  }
+
+  .diagram .box--dashed {
+    stroke: var(--color-border-strong);
+    stroke-dasharray: 4 3;
+    fill: transparent;
+  }
+
+  .diagram .gate--eval {
+    stroke: var(--color-accent);
+    stroke-width: 1.2;
+    fill: var(--color-surface);
+  }
+
+  .diagram .gate--field {
+    stroke: var(--color-accent);
+    stroke-width: 1.2;
+    fill: var(--color-accent);
+  }
+
+  .diagram .line {
+    stroke: var(--color-text-muted);
+    stroke-width: 1.1;
+  }
+
+  .diagram .line--dashed {
+    stroke-dasharray: 4 3;
+  }
+
+  .diagram .line--accent {
+    stroke: var(--color-accent);
+    stroke-width: 1.3;
+  }
+
+  .diagram .line--floor {
+    stroke: var(--color-accent);
+    stroke-width: 1.2;
+    stroke-dasharray: 5 4;
+  }
+
+  .diagram .line--faint {
+    stroke: var(--color-border);
+    stroke-width: 1;
+  }
+
+  .diagram .arrowhead {
+    fill: var(--color-text-muted);
+    stroke: none;
+  }
+
+  .diagram .lbl,
+  .diagram .lbl-l {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    fill: var(--color-text-secondary);
+  }
+
+  .diagram .lbl {
+    text-anchor: middle;
+  }
+
+  .diagram .sub {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    fill: var(--color-text-muted);
+    text-anchor: middle;
+  }
+
+  .diagram .sub-l,
+  .diagram .sub-r {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    fill: var(--color-text-muted);
+  }
+
+  .diagram .sub-r {
+    text-anchor: end;
+  }
+
+  .diagram .lbl--accent {
+    fill: var(--color-accent);
+  }
+
+  .diagram .lbl--muted {
+    fill: var(--color-text-muted);
+  }
+</style>

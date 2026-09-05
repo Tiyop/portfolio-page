@@ -1,0 +1,215 @@
+---
+const groups = [
+  {
+    title: "Agentic systems",
+    stack: ["LangChain", "LangGraph", "ADK", "Claude", "Gemini", "Mistral", "GPT"],
+    note: "Multi-agent architectures, tool use, guardrails, orchestration across providers.",
+  },
+  {
+    title: "Machine learning",
+    stack: ["PyTorch", "TensorFlow", "Keras", "scikit-learn", "Pandas", "NumPy"],
+    note: "Recommendation, ranking and forecasting, from classical models to deep learning.",
+  },
+  {
+    title: "Data & analytics",
+    stack: ["SQL", "BigQuery", "Power BI", "Tableau"],
+    note: "Heavy-duty SQL pipelines at one end, executive dashboards at the other.",
+  },
+  {
+    title: "Optimization",
+    stack: ["PuLP", "OR-Tools", "Linear programming"],
+    note: "Inventory and allocation problems solved under real operational constraints.",
+  },
+  {
+    title: "Cloud & MLOps",
+    stack: ["Vertex AI", "Cloud Run", "AWS"],
+    note: "CI/CD, monitoring, drift detection and retraining pipelines. AWS Solution Architect certified.",
+  },
+  {
+    title: "Engineering practices",
+    stack: ["Python", "Git & CI/CD", "Testing", "Web apps"],
+    note: "Production-grade code, and enough web development to ship a working interface.",
+  },
+];
+---
+
+<section class="skills" id="skills">
+  <div class="container">
+
+    <div class="skills__header">
+      <h2 class="label skills__label">Toolkit</h2>
+      <p class="skills__subhead">
+        Agentic AI is the current focus — built on nine years of machine learning,
+        optimization and analytics, and the engineering discipline to ship all of it.
+      </p>
+    </div>
+
+    <div class="skills__grid">
+
+      <!-- Eval callout — the differentiator, visually promoted -->
+      <div class="skills__callout">
+        <p class="skills__callout-label mono">The through-line</p>
+        <h3 class="skills__callout-title display">Measurement, end to end</h3>
+        <p class="skills__callout-body">
+          I came to AI from industrial engineering, by way of analytics and machine
+          learning, where nothing counts until it's measured. That shapes how I build
+          at both ends: eval frameworks (human annotation pipelines, LLM-judge scoring)
+          to establish that a system works, and business metrics agreed with
+          stakeholders upfront to establish what it's worth.
+        </p>
+      </div>
+
+      <div class="skills__groups">
+        {groups.map((group) => (
+          <div class="skills__group">
+            <h3 class="skills__group-title">{group.title}</h3>
+            <ul class="skills__stack">
+              {group.stack.map(item => <li class="mono">{item}</li>)}
+            </ul>
+            <p class="skills__note">{group.note}</p>
+          </div>
+        ))}
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .skills {
+    background: var(--color-bg-secondary);
+    border-bottom: 1px solid var(--color-border);
+    padding-block: clamp(var(--space-12), 5vw, var(--space-16));
+  }
+
+  /* ─── Header ─────────────────────────────────────────────────────────────── */
+  .skills__header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
+    gap: var(--space-8) var(--space-16);
+    margin-bottom: clamp(var(--space-8), 3vw, var(--space-10));
+  }
+
+  .skills__label {
+    white-space: nowrap;
+  }
+
+  .skills__subhead {
+    font-size: var(--text-lg);
+    line-height: var(--leading-normal);
+    color: var(--color-text-secondary);
+    max-width: 680px;
+  }
+
+  /* ─── Grid ───────────────────────────────────────────────────────────────── */
+  .skills__grid {
+    display: grid;
+    grid-template-columns: 4fr 8fr;
+    align-items: stretch;
+    gap: var(--space-6);
+  }
+
+  /* ─── Eval callout ───────────────────────────────────────────────────────── */
+  .skills__callout {
+    background: var(--color-surface);
+    border: 1px solid var(--color-accent-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-4);
+  }
+
+  .skills__callout-label {
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+  }
+
+  .skills__callout-title {
+    font-size: var(--text-2xl);
+    line-height: var(--leading-snug);
+    color: var(--color-text-primary);
+  }
+
+  .skills__callout-body {
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: var(--color-text-secondary);
+  }
+
+  /* ─── Groups ─────────────────────────────────────────────────────────────── */
+  .skills__groups {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+
+  .skills__group {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5) var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .skills__group-title {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+
+  .skills__stack {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .skills__stack li {
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent-border);
+    border-radius: var(--radius-sm);
+    padding: 2px var(--space-3);
+    background: var(--color-accent-subtle);
+  }
+
+  .skills__note {
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: var(--color-text-muted);
+    margin-top: auto;
+  }
+
+  /* ─── Mobile ─────────────────────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .skills__header {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+
+    .skills__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .skills__callout {
+      padding: var(--space-6);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .skills__groups {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
